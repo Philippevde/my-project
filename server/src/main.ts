@@ -1,18 +1,28 @@
-// Load environment variables from .env file
+import type { RequestHandler } from "express";
+
+// Définir la fonction sayWelcome
+const sayWelcome: RequestHandler = (req, res) => {
+  res.send("Welcome to Wild Series !");
+};
+
+// Charger les variables d'environnement depuis le fichier .env
 import "dotenv/config";
 
-// Check database connection
-// Note: This is optional and can be removed if the database connection
-// is not required when starting the application
+// Vérifier la connexion à la base de données
+// Note: Ceci est optionnel et peut être supprimé si la connexion à la base de données
+// n'est pas nécessaire au démarrage de l'application
 import "../database/checkConnection";
 
-// Import the Express application from ./app
+// Importer l'application Express depuis ./app
 import app from "./app";
 
-// Get the port from the environment variables
-const port = process.env.APP_PORT;
+// Ajouter la route GET /
+app.get("/", sayWelcome);
 
-// Start the server and listen on the specified port
+// Obtenir le port à partir des variables d'environnement
+const port = process.env.APP_PORT || 3310;
+
+// Démarrer le serveur et écouter sur le port spécifié
 app
   .listen(port, () => {
     console.info(`Server is listening on port ${port}`);
